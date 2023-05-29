@@ -1,4 +1,5 @@
 library(pool)
+library(lubridate)
 
 pool <- dbPool(
   drv = RMySQL::MySQL(),
@@ -15,5 +16,8 @@ names(df) <- c("stock_id", "time", "NOI", "operating_cost",
                "EPS", "ROA", "ROE", "operating_margin", 
                "NPMBT", "EOS_PE", "EOS_PB", "EOS_PSR", "tobinsQ")
 
-dbWriteTable(pool, "BasicAnalysis", df)
+df$time <- ym(df$time) |> stringr::str_replace_all("-", "/")
 
+dbWriteTable(pool, "BasicAnalysis", df, overwrite = FALSE, append = TRUE, row.names = F)
+
+# dbRemoveTable(pool, "basicanalysis")
