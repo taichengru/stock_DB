@@ -36,7 +36,7 @@ CREATE TABLE FundamentalAnalysis
 "
 dbSendQuery(mysqlconnection, Query) 
 
-df <-  readxl::read_excel("data/公司籌碼面.xlsx")
+# df <-  readxl::read_excel("data/公司籌碼面.xlsx")
 
 map(seq_len(NROW(df)),
     function(i) {
